@@ -277,6 +277,146 @@ namespace JabbR.Test
                 //assert
                 Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://localhost/foo\" title=\"http://localhost/foo\">http://localhost/foo</a>", result);
             }
+
+            [Fact]
+            public void LeftParenthesis()
+            {
+                //arrange
+                var message = @"(http://foo.com";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("(<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com\" title=\"http://foo.com\">http://foo.com</a>", result);
+            }
+
+            [Fact]
+            public void RightParenthesis()
+            {
+                //arrange
+                var message = @"http://foo.com)";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com\" title=\"http://foo.com\">http://foo.com</a>)", result);
+            }
+
+            [Fact]
+            public void BothParenthesis()
+            {
+                //arrange
+                var message = @"(http://foo.com)";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("(<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com\" title=\"http://foo.com\">http://foo.com</a>)", result);
+            }
+
+            [Fact]
+            public void MSDN()
+            {
+                //arrange
+                var message = @"http://msdn.microsoft.com/en-us/library/system.linq.enumerable(v=vs.110).aspx";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://msdn.microsoft.com/en-us/library/system.linq.enumerable(v=vs.110).aspx\" title=\"http://msdn.microsoft.com/en-us/library/system.linq.enumerable(v=vs.110).aspx\">http://msdn.microsoft.com/en-us/library/system.linq.enumerable(v=vs.110).aspx</a>", result);
+            }
+
+            [Fact]
+            public void MoreThanOneSetOfParens()
+            {
+                //arrange
+                var message = @"http://foo.com/more_(than)_one_(parens)";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com/more_(than)_one_(parens)\" title=\"http://foo.com/more_(than)_one_(parens)\">http://foo.com/more_(than)_one_(parens)</a>", result);
+            }
+
+            [Fact]
+            public void WikiWithParensAndHash()
+            {
+                //arrange
+                var message = @"http://foo.com/blah_(wikipedia)#cite-1";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com/blah_(wikipedia)#cite-1\" title=\"http://foo.com/blah_(wikipedia)#cite-1\">http://foo.com/blah_(wikipedia)#cite-1</a>", result);
+            }
+
+            [Fact]
+            public void WikiWithParensAndMoreAndHash()
+            {
+                //arrange
+                var message = @"http://foo.com/blah_(wikipedia)_blah#cite-1";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com/blah_(wikipedia)_blah#cite-1\" title=\"http://foo.com/blah_(wikipedia)_blah#cite-1\">http://foo.com/blah_(wikipedia)_blah#cite-1</a>", result);
+            }
+
+            [Fact]
+            public void BitLyWithoutHttp()
+            {
+                //arrange
+                var message = @"bit.ly/foo";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://bit.ly/foo\" title=\"bit.ly/foo\">bit.ly/foo</a>", result);
+            }
+
+            [Fact]
+            public void UnicodeInParens()
+            {
+                //arrange
+                var message = @"http://foo.com/unicode_(✪)_in_parens";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com/unicode_(&#10026;)_in_parens\" title=\"http://foo.com/unicode_(✪)_in_parens\">http://foo.com/unicode_(✪)_in_parens</a>", result);
+            }
+
+            [Fact]
+            public void SomethingAfterParens()
+            {
+                //arrange
+                var message = @"http://foo.com/(something)?after=parens";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com/(something)?after=parens\" title=\"http://foo.com/(something)?after=parens\">http://foo.com/(something)?after=parens</a>", result);
+            }
         }
     }
 }
