@@ -918,7 +918,7 @@
         ui.addMessage('Type /help to see the list of commands', 'notification');
 
         function initConnection() {
-            var logging = $.cookie('jabbr.logging') === '1',
+            var logging = utility.isLoggingEnabled(),
                 transport = $.cookie('jabbr.transport'),
                 options = {};
 
