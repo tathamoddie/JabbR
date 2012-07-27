@@ -199,15 +199,15 @@
         };
 
         this.makeInactive = function () {
-            this.tab.removeClass('current');
+            this.tab.removeClass('current active');
 
-            this.messages.removeClass('current')
+            this.messages.removeClass('current active')
                          .hide();
 
-            this.users.removeClass('current')
+            this.users.removeClass('current active')
                       .hide();
 
-            this.roomTopic.removeClass('current')
+            this.roomTopic.removeClass('current active')
                       .hide();
 
             if (this.isLobby()) {
@@ -223,7 +223,7 @@
                 $newMessage.focus();
             }
 
-            this.tab.addClass('current')
+            this.tab.addClass('current active')
                     .removeClass('unread')
                     .stop(true, true)
                     .css('backgroundColor', '')
@@ -233,13 +233,13 @@
                     .find('.content')
                     .text(this.getName());
 
-            this.messages.addClass('current')
+            this.messages.addClass('current active')
                          .show();
 
-            this.users.addClass('current')
+            this.users.addClass('current active')
                       .show();
 
-            this.roomTopic.addClass('current')
+            this.roomTopic.addClass('current active')
                       .show();
 
             if (this.isLobby()) {
@@ -446,7 +446,7 @@
 
         if (roomName !== "lobby") {
             userContainer = $('<div/>').attr('id', 'userlist-' + roomId)
-                .addClass('users')
+                .addClass('users pull-right')
                 .appendTo($chatArea).hide();
             templates.userlist.tmpl({ listname: '- Room Owners', id: 'userlist-' + roomId + '-owners' })
                 .addClass('owners')

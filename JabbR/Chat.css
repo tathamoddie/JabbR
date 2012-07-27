@@ -35,7 +35,7 @@
 .banner > div
 {
   float: left;
-  margin-top: 28px;
+  margin-top: 18px;
   margin-left: 10px;
 }
 
@@ -51,23 +51,30 @@
   padding-left: 0px;
   font-size: small;
   position: absolute;
-  top: 24px;
-  left: 71%;
-  width: 25%;
-  bottom: 70px;
+  top: 150px;
+  right: 10px;
+  width: 15%;
   margin-left: 2px;
-  height: 18px;
+  height: 25px;
 }
 
-#users-filter
+#users-filter-form
 {
-  display: none;
   position: absolute;
-  top: 55px;
+  top: 178px;
+  right: 10px;
+  margin: 0;
   width: 15%;
-  left: 71%;
-  margin-top: 4px;
 }
+
+  #users-filter
+  {
+    display: none;
+    /*position: absolute;
+    top: 55px;*/
+    width: 90%;
+    margin-top: 4px;
+  }
 
 #preferences a
 {
@@ -133,7 +140,7 @@
   margin-top: 10px;
   margin-left: 0px;
 }
-
+/*
 #chat-area
 {
   position: absolute;
@@ -143,7 +150,7 @@
   right: 10px;
   min-height: 450px;
 }
-
+*/
 #heading
 {
   background-color: #00103f;
@@ -161,15 +168,15 @@
 
 .messages
 {
-  width: 70%;
+  width: 66%;
   border: 1px solid #ccc;
   overflow: auto;
   margin-left: 0px;
   margin-top: 0px;
   padding-left: 0px;
   position: absolute;
-  top: 55px;
-  bottom: 70px;
+  top: 95px;
+  bottom: 100px;
   background-color: #fff;
 }
 
@@ -196,7 +203,7 @@
 .roomTopic
 {
   position: absolute;
-  top: 25px;
+  top: 62px;
 }
 
 .users
@@ -205,9 +212,10 @@
   padding-left: 0px;
   font-size: small;
   position: absolute;
-  top: 55px;
-  left: 71%;
-  width: 25%;
+  top: 185px;
+  right: 10px;
+  /*left: 71%;*/
+  width: 15%;
   bottom: 70px;
   margin-left: 2px; /* for #messages border */
   margin-top: 0px;
@@ -216,7 +224,7 @@
 
 #userlist-lobby
 {
-  top: 85px;
+  top: 215px;
 }
 
 .users ul
@@ -290,7 +298,7 @@
 
 .users .details
 {
-  width: 90%;
+  width: 85%;
   display: inline-block;
   vertical-align: top;
 }
@@ -326,87 +334,31 @@
     border-bottom: none;
   }
 
-#tabs
-{
-  padding: 0;
-  margin: 0px 0px 0px 5px;
-  z-index: 1000;
-  height: 30px;
-}
-
-  #tabs li
+  #tabs
   {
-    display: inline-block;
-    padding: 0;
-    margin: 0px 4px 0px 0px;
-    height: 30px;
-    border-bottom: 0px;
-    position: relative;
-    background-color: #164c85;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
+    margin-left: 10px;
   }
-
-    #tabs li button
-    {
-      height: inherit;
-      margin: 0;
-      padding: 0 20px 0 0;
-      border: none;
-      outline: 0;
-      background-color: transparent;
-      color: inherit;
-      cursor: inherit;
-      font-weight: inherit;
-    }
-
-    #tabs li.current
-    {
-      color: #32aa52;
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#e5e5e5'); /* for IE */
-      background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e5e5e5)); /* for webkit browsers */
-      background: -moz-linear-gradient(top, #f5f5f5, #e5e5e5); /* for firefox 3.6+ */
-      background: -o-linear-gradient(top, #f5f5f5, #e5e5e5); /* for opera 11.10+ */
-    }
-
+  
     #tabs li .content
     {
-      margin: 6px 10px 6px 10px;
-    }
-
-    #tabs li.locked .content
-    {
-      margin: 6px 10px 6px 23px;
-    }
-    
-    #tabs li.closed .content
-    {
-      margin: 6px 10px 6px 27px;
-    }
-    
-    #tabs li.closed.locked .content
-    {
-      margin: 6px 10px 6px 47px;
+      vertical-align: text-top;
+      display: inline-block;
+      margin: 0px 5px;
     }
     
     #tabs li .close
     {
-      position: absolute;
-      top: 7px;
-      right: 5px;
+      display: inline-block;
       width: 16px;
       height: 16px;
-      background: url(Content/images/close-icon.png);
+      /*background: url(Content/images/close-icon.png);*/
     }
 
     #tabs li.locked .lock
     {
-      position: absolute;
-      top: 7px;
+      display: inline-block;
       width: 16px;
       height: 16px;
-      margin-left: 5px;
       background: url(Content/images/lockwhite.png) no-repeat;
     }
 
@@ -417,22 +369,15 @@
     
     #tabs li.closed .readonly
     {
-      position: absolute;
-      top: 7px;
+      display: inline-block;
       width: 19px;
       height: 16px;
-      margin-left: 5px;
       background: url(Content/images/no-typing-white.png) no-repeat;
     }
     
     #tabs li.closed.current .readonly, #tabs li.closed:hover .readonly
     {
       background: url(Content/images/no-typing.png) no-repeat;
-    }
-        
-    #tabs li.closed.locked .readonly
-    {
-      margin-left: 22px;
     }
 
     #tabs li .close:hover
@@ -465,31 +410,13 @@ li.room
     background-color: #f5f5f5;
   }
 
-#tabs li.lobby
-{
-  background-color: #00103f;
-  color: #fff;
-  padding-right: 0;
-}
-
-  #tabs li.lobby button
-  {
-    padding-right: 0;
-    margin-right: 10px;
-  }
-
-  #tabs li.lobby.current
-  {
-    background-color: #00103f;
-    color: #000;
-  }
 
 #send-message
 {
   position: absolute;
   bottom: 20px;
   height: 50px;
-  width: 70%;
+  width: 66%;
 }
 
 #message-box

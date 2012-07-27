@@ -18,15 +18,15 @@
     <link href="/Content/images/logo64.png" rel="icon" type="image/png" sizes="64x64">
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" sizes="16x16">
     <%= Bundle.Css()
-            .Add("~/Chat.css",
-                  "~/Chat.nuget.css",
-                  "~/Chat.bbcnews.css",
-                  "~/Chat.githubissues.css",
-                  "~/Chat.dictionary.css",
-                  "~/Content/KeyTips.css",
-                  "~/Content/bootstrap.min.css",
+            .Add("~/Content/bootstrap.min.css",
+                 "~/Chat.css",
+                 "~/Chat.nuget.css",
+                 "~/Chat.bbcnews.css",
+                 "~/Chat.githubissues.css",
+                 "~/Chat.dictionary.css",
+                 "~/Content/KeyTips.css", 
                   "~/Content/emoji20.css")
-            .ForceRelease()
+            //.ForceRelease()
             .Render("~/Content/JabbR_#.css")
   %>
 
@@ -132,12 +132,12 @@
     </script>
     <script id="new-tab-template" type="text/x-jquery-tmpl">
         <li id="tabs-${id}" class="room" data-name="${name}" data-closed="${closed}" role="tab">
-            <span class="lock"></span>
-            <span class="readonly"></span>
-            <button> 
+            <a href="#"> 
+                <span class="lock"></span>
+                <span class="readonly"></span>
                 <span class="content">${name}</span>
-            </button>
-            <div class="close"></div>
+                <i class="icon icon-remove close"></i>
+            </a>
         </li>
     </script>
     <!-- TweetContentProvider: Should be extracted out if other content providers need templates -->
@@ -215,54 +215,72 @@
 </head>
 <body>
   <section id="page" role="application">
-    <header id="heading" role="heading">
-      <div class="banner" role="banner">
-        <h1>Jabb</h1>
-        <div class="jabbrLogo" id="logo"></div>
-        <div>
-          Powered by <a href="https://github.com/SignalR/SignalR" target="_blank">SignalR</a>
+    
+    <header class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+            <div class="banner" role="banner">
+                <h1>Jabb</h1>
+                <div class="jabbrLogo" id="logo"></div>
+                <div>
+                  Powered by <a href="https://github.com/SignalR/SignalR" target="_blank">SignalR</a>
+                </div>
+            </div>
         </div>
       </div>
-      <a href="https://github.com/davidfowl/JabbR" class="forkme" target="_blank">
-        </a>
-          <div style="clear: both">
-    </div>
-    <nav>
-      <ul id="tabs" role="tablist">
-        <li id="tabs-lobby" class="current lobby" data-name="Lobby" role="tab">
-          <button accesskey="l">
-            <span class="content">Lobby</span>
-          </button>
-        </li>
-      </ul>
-    </nav>
+      <a href="https://github.com/davidfowl/JabbR" class="forkme" target="_blank"></a>
     </header>
-    <div id="chat-area" role="tabpanel">
-      <ul id="messages-lobby" class="messages current" role="log">
-      </ul>
-      <form id="users-filter-form" action="#">
-      <input id="users-filter" class="filter" type="text" />
-      </form>
-      <ul id="userlist-lobby" class="users current">
-      </ul>
-      <div id="preferences">
-        <a class="sound" title="audible notifications"></a>
-        <a class="richness" title="toggle rich-content"></a>
-        <a class="toast" title="popup notifications" aria-haspopup="true"></a>
-        <a class="download" title="download messages" aria-haspopup="true"></a>
-      </div>
-      <form id="send-message" action="#">
-      <div id="message-box">
-        <textarea id="new-message" autocomplete="off" aria-autocomplete="none" accesskey="m"></textarea>
-      </div>
-      <input type="submit" id="send" value="Send" class="send" />
-      <div id="message-instruction">
-        Type @ then press TAB to auto-complete nicknames
-      </div>
-      </form>
+
+    <div class="fluid-container">
+        <div class="row-fluid">
+            <nav class="span2">
+              <ul id="tabs" class="nav nav-pills nav-stacked" role="tablist">
+                <li id="tabs-lobby" class="current active lobby" data-name="Lobby" role="tab">
+                  <a href="#" accesskey="l">
+                    <span class="content">Lobby</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+
+            <div class="span10">
+                <div id="chat-area" class="row-fluid" role="tabpanel">
+              
+                    <ul id="messages-lobby" class="messages current" role="log">
+                    </ul>
+          
+                    <form id="users-filter-form" action="#">
+                        <input id="users-filter" class="filter" type="text" />
+                    </form>
+          
+                    <ul id="userlist-lobby" class="users current pull-right">
+                    </ul>
+          
+                    <div id="preferences">
+                        <a class="sound" title="audible notifications"></a>
+                        <a class="richness" title="toggle rich-content"></a>
+                        <a class="toast" title="popup notifications" aria-haspopup="true"></a>
+                        <a class="download" title="download messages" aria-haspopup="true"></a>
+                    </div>
+
+                    <form id="send-message" action="#">
+                        <div id="message-box">
+                        <textarea id="new-message" autocomplete="off" aria-autocomplete="none" accesskey="m"></textarea>
+                        </div>
+                        <input type="submit" id="send" value="Send" class="send" />
+                        <div id="message-instruction">
+                        Type @ then press TAB to auto-complete nicknames
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
     </div>
+    
     <audio src="Content/sounds/notification.wav" id="noftificationSound" hidden="hidden" aria-hidden="true">
     </audio>
+
     <section aria-hidden="true" aria-haspopup="true">
       <div id="disconnect-dialog" class="modal hide fade">
         <div class="modal-header">
