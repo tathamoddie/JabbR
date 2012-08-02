@@ -206,11 +206,12 @@ namespace JabbR.Test
                 var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
 
                 //assert
-                Assert.Equal("message <a rel=\"nofollow external\" target=\"_blank\" href=\"http://&#10145;.ws/&#19001;\" title=\"http://➡.ws/䨹\">http://➡.ws/䨹</a> continues on", result);
+                Assert.Equal("message <a rel=\"nofollow external\" target=\"_blank\" href=\"http://➡.ws/䨹\" title=\"http://➡.ws/䨹\">http://➡.ws/䨹</a> continues on", result);
             }
 
             [Fact]
-            public void UrlWithEllipsisIsTransformed() {
+            public void UrlWithEllipsisIsTransformed() 
+            {
                 //arrange
                 var message = "message https://github.com/NuGet/NuGetGallery/compare/345ea25491...90a05bc3e0 continues on";
                 HashSet<string> extractedUrls;
@@ -247,7 +248,7 @@ namespace JabbR.Test
                 var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
 
                 //assert
-                Assert.Equal("message <a rel=\"nofollow external\" target=\"_blank\" href=\"http://google.com/?1&amp;2\" title=\"http://google.com/?1&amp;2\">http://google.com/?1&amp;2</a> continues on", result);
+                Assert.Equal("message <a rel=\"nofollow external\" target=\"_blank\" href=\"http://google.com/?1&2\" title=\"http://google.com/?1&amp;2\">http://google.com/?1&amp;2</a> continues on", result);
             }
 
             [Fact]
@@ -401,7 +402,7 @@ namespace JabbR.Test
                 var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
 
                 //assert
-                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com/unicode_(&#10026;)_in_parens\" title=\"http://foo.com/unicode_(✪)_in_parens\">http://foo.com/unicode_(✪)_in_parens</a>", result);
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com/unicode_(✪)_in_parens\" title=\"http://foo.com/unicode_(✪)_in_parens\">http://foo.com/unicode_(✪)_in_parens</a>", result);
             }
 
             [Fact]
@@ -416,6 +417,48 @@ namespace JabbR.Test
 
                 //assert
                 Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com/(something)?after=parens\" title=\"http://foo.com/(something)?after=parens\">http://foo.com/(something)?after=parens</a>", result);
+            }
+
+            [Fact]
+            public void UrlInsideAQuotedSentence()
+            {
+                //arrange
+                var message = "This is a sentence with quotes and a url ... see \"http://foo.com\"";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("This is a sentence with quotes and a url ... see \"<a rel=\"nofollow external\" target=\"_blank\" href=\"http://foo.com\" title=\"http://foo.com\">http://foo.com</a>\"", result);
+            }
+
+            [Fact]
+            public void UrlEndsWithSlashInsideAQuotedSentence()
+            {
+                //arrange
+                var message = "\"Visit http://www.jabbr.net/\"";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("\"Visit <a rel=\"nofollow external\" target=\"_blank\" href=\"http://www.jabbr.net/\" title=\"http://www.jabbr.net/\">http://www.jabbr.net/</a>\"", result);
+            }
+
+            [Fact]
+            public void GoogleUrlWithQueryStringParams()
+            {
+                //arrange
+                var message = "https://www.google.com/search?q=test+search&amp;sugexp=chrome,mod=14&amp;sourceid=chrome&amp;ie=UTF-8";
+                HashSet<string> extractedUrls;
+
+                //act
+                var result = TextTransform.TransformAndExtractUrls(message, out extractedUrls);
+
+                //assert
+                Assert.Equal("<a rel=\"nofollow external\" target=\"_blank\" href=\"https://www.google.com/search?q=test+search&sugexp=chrome,mod=14&sourceid=chrome&ie=UTF-8\" title=\"https://www.google.com/search?q=test+search&amp;sugexp=chrome,mod=14&amp;sourceid=chrome&amp;ie=UTF-8\">https://www.google.com/search?q=test+search&amp;sugexp=chrome,mod=14&amp;sourceid=chrome&amp;ie=UTF-8</a>", result);
             }
         }
     }
