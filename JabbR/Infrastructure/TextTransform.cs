@@ -42,7 +42,8 @@ namespace JabbR.Infrastructure
 
             return message;
         }
-
+        
+        // regex from http://daringfireball.net/2010/07/improved_regex_for_matching_urls
         static Regex urlPattern = new Regex(@"(?xi)
 \b
 (                           # Capture 1: entire matched URL
