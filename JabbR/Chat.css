@@ -44,7 +44,7 @@
 #users-filter-form
 {
   position: absolute;
-  top: 178px;
+  top: 93px;
   right: 10px;
   margin: 0;
   width: 15%;
@@ -186,7 +186,7 @@
   padding-left: 0px;
   font-size: small;
   position: absolute;
-  top: 185px;
+  top: 100px;
   right: 10px;
   /*left: 71%;*/
   width: 15%;
@@ -198,7 +198,7 @@
 
 #userlist-lobby
 {
-  top: 215px;
+  top: 130px;
 }
 
 .users ul
