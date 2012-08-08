@@ -26,7 +26,6 @@
                  "~/Chat.dictionary.css",
                  "~/Content/KeyTips.css", 
                   "~/Content/emoji20.css")
-            //.ForceRelease()
             .Render("~/Content/JabbR_#.css")
   %>
 
@@ -226,9 +225,20 @@
                   Powered by <a href="https://github.com/SignalR/SignalR" target="_blank">SignalR</a>
                 </div>
             </div>
+            <div id="preferences" class="btn-group pull-right">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="icon icon-cog"></i> Preferences
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="sound" title="audible notifications"> sounds</a></li>
+                    <li><a class="richness" title="toggle rich-content"> rich content</a></li>
+                    <li><a class="toast" title="popup notifications" aria-haspopup="true"> notifications</a></li>
+                    <li><a class="download" title="download messages" aria-haspopup="true"> download</a></li>
+                </ul>
+            </div>
         </div>
       </div>
-      <a href="https://github.com/davidfowl/JabbR" class="forkme" target="_blank"></a>
     </header>
 
     <div class="fluid-container">
@@ -255,13 +265,6 @@
           
                     <ul id="userlist-lobby" class="users current pull-right">
                     </ul>
-          
-                    <div id="preferences">
-                        <a class="sound" title="audible notifications"></a>
-                        <a class="richness" title="toggle rich-content"></a>
-                        <a class="toast" title="popup notifications" aria-haspopup="true"></a>
-                        <a class="download" title="download messages" aria-haspopup="true"></a>
-                    </div>
 
                     <form id="send-message" action="#">
                         <div id="message-box">
@@ -346,7 +349,6 @@
                 "~/Scripts/jquery.KeyTips.js",
                 "~/Scripts/jquery-ui-1.8.17.min.js",
                 "~/Scripts/jquery.signalR-0.5.2.min.js")
-            .ForceRelease()
             .Render("~/Scripts/JabbR1_#.js")
   %>
   <script type="text/javascript" src='<%= ResolveClientUrl("~/signalr/hubs") %>'></script>
@@ -370,7 +372,6 @@
                 "~/Chat.pinnedWindows.js",
                 "~/Chat.githubissues.js",
                 "~/Chat.js")
-            .ForceRelease()
             .Render("~/Scripts/JabbR2_#.js")
   %>
 </body>
