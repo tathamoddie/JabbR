@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -66,20 +67,13 @@ namespace JabbR
             // Get the client state
             ClientState clientState = GetClientState();
 
-            // Try to get the user from the client state
-            ChatUser user = _repository.GetUserById(clientState.UserId);
-
-            // Threre's no user being tracked
+            // Authenticate the user from Windows identity, creating a new system user if it's the first visit
+            var domainQualifiedUserName = Context.Request.User.Identity.Name;
+            var user = _repository.GetUserByIdentity(domainQualifiedUserName);
             if (user == null)
             {
-                return false;
-            }
-
-            // Migrate all users to use new auth
-            if (!String.IsNullOrEmpty(_settings.AuthApiKey) &&
-                String.IsNullOrEmpty(user.Identity))
-            {
-                return false;
+                var username = domainQualifiedUserName.Split('\\')[1];
+                user = _service.AddUser(username, domainQualifiedUserName, null);
             }
 
             // Update some user values
