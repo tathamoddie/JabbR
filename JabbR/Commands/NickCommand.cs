@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 using JabbR.Services;
 using JabbR.Models;
 
@@ -12,6 +13,12 @@ namespace JabbR.Commands
     {
         public void Execute(CommandContext context, CallerContext callerContext, string[] args)
         {
+            var authenticationConfig = (AuthenticationSection)WebConfigurationManager.GetSection("system.web/authentication");
+            if (authenticationConfig.Mode == AuthenticationMode.Windows)
+            {
+                throw new InvalidOperationException("Nick not supported with Windows authentication");
+            }
+
             if (args.Length == 0)
             {
                 throw new InvalidOperationException("No nick specified!");
